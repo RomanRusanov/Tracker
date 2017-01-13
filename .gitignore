@@ -1,0 +1,12 @@
+*.xml
+
+*.idea
+*.asta
+target
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
