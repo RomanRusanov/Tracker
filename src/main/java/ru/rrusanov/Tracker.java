@@ -1,6 +1,13 @@
 package ru.rrusanov;
 
 import ru.rrusanov.models.Item;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 import static java.util.Arrays.copyOf;
 
 /**
@@ -48,6 +55,24 @@ public class Tracker {
         return result;
     }
     /**
+     * The method takes a string and looks for it in the items array by field name,
+     * returns the array with items has this string.
+     * @param key String for find in array
+     * @return array Item[] with mach key string
+     */
+    public Item[] findByName(String key) {
+
+        Item[] resultItemArray = new Item[items.length];
+        int indexResultArray = 0;
+        for (Item item : items) {
+            if (item != null && item.getName() != null && item.getName().equals(key)) {
+                resultItemArray[indexResultArray] = item;
+                indexResultArray++;
+            }
+        }
+        return copyOf(resultItemArray, indexResultArray);
+    }
+    /**
      * The method takes an item to update the id field it finds in the items array.
      * @param itemUpdate Item to need update
      */
@@ -88,22 +113,97 @@ public class Tracker {
         }
         return copyOf(resultItemArray, indexResultArray);
     }
-    /**
-     * The method takes a string and looks for it in the items array by field name,
-     * returns the array with items has this string.
-     * @param key String for find in array
-     * @return array Item[] with mach key string
-     */
-    public Item[] findByName(String key) {
 
-        Item[] resultItemArray = new Item[items.length];
-        int indexResultArray = 0;
+    /**
+     * printed item to console.
+     * @param item item for print
+     */
+    public void printToConsoleItem(Item item) {
+        System.out.printf("%n---------------------------------------%n "
+                          + "ID: %s%n "
+                          + "name: %s%n "
+                          + "description: %s%n "
+                          + "create time: %s%n "
+                          + "comment: %s%n"
+                          + "---------------------------------------%n", item.getId(),
+                                                                       item.getName(),
+                                                                       item.getDescription(),
+                                                                       convert(item.getCreate()),
+                                                                       item.getComment());
+    }
+    /**
+     * print to console array items.
+     * @param item array items
+     */
+    public void printToConsoleItem(Item[] item) {
+        for (Item i:item) {
+            System.out.printf("%n---------------------------------------%n "
+                            + "ID: %s%n "
+                            + "name: %s%n "
+                            + "description: %s%n "
+                            + "create time: %s%n "
+                            + "comment: %s%n"
+                            + "---------------------------------------%n", i.getId(),
+                                                                         i.getName(),
+                                                                         i.getDescription(),
+                                                                         convert(i.getCreate()),
+                                                                         i.getComment());
+        }
+    }
+    /**
+     * update filds (name, description, date time, comment) of new value.
+     * @param item item for update
+     */
+    public void fieldsUpdate(Item item) {
+        Input consoleInput = new ConsoleInput();
+        item.setName(consoleInput.ask("Enter new name "));
+        item.setDescription(consoleInput.ask("Enter new description "));
+        item.setCreate(convert(consoleInput.ask("Enter new date and time(31.12.1970 23:59:59) ")));
+        item.setComment(consoleInput.ask("Enter new comment "));
+    }
+    /**
+     * search in tracker items with math date and time.
+     * @param userInputDate user selected date and time to search
+     * @return array item match value
+     */
+    public Item[] findByCreate(String userInputDate) {
+        Item[] result = new Item[items.length];
+        int countFindItem = 0;
         for (Item item : items) {
-            if (item != null && item.getName() != null && item.getName().equals(key)) {
-                resultItemArray[indexResultArray] = item;
-                indexResultArray++;
+            if (item != null && item.getCreate() != 0L && item.getCreate() == convert(userInputDate)) {
+                result[countFindItem] = item;
+                countFindItem++;
+                //printToConsoleItem(item);
             }
         }
-        return copyOf(resultItemArray, indexResultArray);
+        return copyOf(result, countFindItem);
+    }
+    /**
+     * convert value millisecond to string date and time example (31.12.1970 23:59:59).
+     * @param millis vaule in milliseconds
+     * @return string date and time "31.12.1970 23:59:59"
+     */
+    public String convert(long millis) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getTimeZone("Russia/Moscow"));
+        cal.setTimeInMillis(millis);
+        final String timeString = new SimpleDateFormat("dd.MM.yy HH:mm:ss").format(cal.getTime());
+        return timeString;
+    }
+    /**
+     * convert string value date and time "31.12.1970 23:59:59" to millisecond value.
+     * @param userInputDate string "31.12.1970 23:59:59"
+     * @return long in milliseconds
+     */
+    public long convert(String userInputDate) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
+        Date date = new Date();
+
+        try {
+            date = simpleDateFormat.parse(userInputDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
     }
 }

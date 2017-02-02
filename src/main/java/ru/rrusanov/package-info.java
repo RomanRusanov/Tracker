@@ -11,5 +11,8 @@
  *  void delete(Item itemDelete) The method takes an item to delete, the id field it finds in the items array, finded item are assigned null.
  *  Item[] findAll() The Method return array all items, exluding null items.
  *  Item[] findByName(String key) The method takes a string and looks for it in the items array by field name, returns the array with items has this string.
+ *
+ * Input.java The interface describes the input.
+ *
  */
 package ru.rrusanov;

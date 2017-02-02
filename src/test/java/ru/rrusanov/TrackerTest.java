@@ -125,4 +125,37 @@ public class TrackerTest {
             Assert.assertThat(item.getName(), is(keyNameToFind));
         }
     }
+    /**
+     * Test convert date&time to milliseconds.
+     * @{value} expect string value date and time
+     */
+    @Test
+    public void thenArgTypeLongWhenReturnStringDateAndTime() {
+        Tracker tracker = new Tracker();
+        final String expect = "29.01.17 17:01:00";
+        final String result = tracker.convert(1485698460000L);
+        Assert.assertThat(result, is(expect));
+    }
+    /**
+     * Test convert milliseconds to date&time.
+     * @{value} expect value in milliseconds.
+     */
+    @Test
+    public void thenArgTypeStringWhenReturnLongDataAndTimeInMillis() {
+        Tracker tracker = new Tracker();
+        final long expect = 1485698460000L;
+        final long result = tracker.convert("29.01.17 17:01:00");
+        Assert.assertThat(result, is(expect));
+    }
+    /**
+     * Test findByCreate method.
+     * @{value} expect value new item with specific create filed(date&time).
+     */
+    @Test
+    public void thenSearchingDateAndTimeEqualsDateAndTimeInItemsArrayWhenReturnThem() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("name", "desc",  tracker.convert("01.01.70 12:00:00"), "comm"));
+        final Item[] result = tracker.findByCreate("01.01.70 12:00:00");
+        Assert.assertTrue(result[0].getCreate() == tracker.convert("01.01.70 12:00:00"));
+    }
 }

@@ -69,5 +69,4 @@ public class ItemTest {
         final String result = item.getComment();
         Assert.assertThat(result, is(expect));
     }
-
 }

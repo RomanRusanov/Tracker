@@ -119,13 +119,14 @@ public class Item {
      */
     public Item(String id) {
         this.id = id;
+        this.create = System.currentTimeMillis();
     }
     /**
      * Consructor for Item object.
-     * @param name String name for item
-     * @param description String description for item
-     * @param create long create of time item
-     * @param comment String comment for item
+     * @param name name for item
+     * @param description description for item
+     * @param create date and time creation item in tracker
+     * @param comment comment for item
      */
     public Item(String name, String description, long create, String comment) {
         this.id = generateId();
