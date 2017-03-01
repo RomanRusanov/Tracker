@@ -1,7 +1,7 @@
 package ru.rrusanov;
 import java.util.Scanner;
 /**
- * A class implements an input conole.
+ * A class implements an input console.
  *
  * @author Roman Rusanov
  * @version 0.1
@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class ConsoleInput implements Input {
     /**
-     * @{{value} for capture system in.
+     * @{value} for capture system in.
      */
     private Scanner scanner = new Scanner(System.in);
     /**

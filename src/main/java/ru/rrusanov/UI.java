@@ -7,11 +7,11 @@ import ru.rrusanov.models.Item;
  * @version 0.1
  * @since 24.01.17
  */
-public class StartUI {
+public class UI {
     /**
      * Use to define what item menu user has selected.
      */
-    private String userChoose = "0";
+    private String userChoose = "-1";
     /**
      * reference to item(user selected use console.ask()) that be updated or deleted.
      */
@@ -96,8 +96,9 @@ public class StartUI {
     }
     /**
      * The interface for dialogue with the user.
+     * @param input console or stub input
      */
-    public void userInterface() {
+    public void mainMenuToConsole(Input input) {
         /**
          * instance tracker for items
          */
@@ -105,26 +106,25 @@ public class StartUI {
         /**
          * instance interact with user, get from user string in console.
          */
-        ConsoleInput consoleInput = new ConsoleInput();
         // Cycle for main menu(to exit user must enter 'x' char at the main menu)
         while (!this.getUserChoose().equals("x")) {
             this.printMenu();
-            this.setUserChoose(consoleInput.ask("Please choose action, and enter selected action item"));
+            this.setUserChoose(input.ask("Please choose action, and enter selected action item"));
             // User choose add new user
             if (this.getUserChoose().equals("1")) {
                 System.out.printf("%nadd new item%n------------");
-                tracker.add(new Item(consoleInput.ask("Enter name for new item "),
-                        consoleInput.ask("Enter description "),
+                tracker.add(new Item(input.ask("Enter name for new item "),
+                        input.ask("Enter description "),
                         System.currentTimeMillis(),
-                        consoleInput.ask("Enter comments ")));
+                        input.ask("Enter comments ")));
             // User choose search item use ID item.
             } else if (this.getUserChoose().equals("2")) {
                 System.out.printf("%nfind item by ID field%n---------------------");
-                tracker.printToConsoleItem(tracker.findById(consoleInput.ask("Enter ID to find ")));
+                tracker.printToConsoleItem(tracker.findById(input.ask("Enter ID to find ")));
             // User choose search item use name item.
             } else if (this.getUserChoose().equals("3")) {
                 System.out.printf("%nfind item by Name field%n-----------------------");
-                tracker.printToConsoleItem(tracker.findByName(consoleInput.ask("Enter name to find ")));
+                tracker.printToConsoleItem(tracker.findByName(input.ask("Enter name to find ")));
             // User choose update specific item(s).
             } else if (this.getUserChoose().equals("4")) {
                 System.out.printf("%nupdate exist item(s)%n"
@@ -132,17 +132,17 @@ public class StartUI {
                         + "1 - by ID%n"
                         + "2 - by name%n"
                         + "3 - by create time%n");
-                this.setUserChoose(consoleInput.ask("Please choose action, and enter selected action item"));
+                this.setUserChoose(input.ask("Please choose action, and enter selected action item"));
                 // User choose update specific item(s) for search use ID field.
                 if (this.getUserChoose().equals("1")) {
-                    this.setItemToAction(tracker.findById(consoleInput.ask("Enter exist ID to search in items ")));
+                    this.setItemToAction(tracker.findById(input.ask("Enter exist ID to search in items ")));
                     tracker.fieldsUpdate(this.getItemToAction());
                     tracker.update(this.getItemToAction());
                     System.out.printf("%nItem ID: %s  successfully updated!", this.getItemToAction().getId());
                     tracker.printToConsoleItem(this.getItemToAction());
                 // User choose update specific item(s) for use name field.
                 } else if (this.getUserChoose().equals("2")) {
-                    this.setItemsArrayToAction(tracker.findByName(consoleInput.ask("Enter exist name to search in items ")));
+                    this.setItemsArrayToAction(tracker.findByName(input.ask("Enter exist name to search in items ")));
                     for (Item item : this.getItemsArrayToAction()) {
                         tracker.fieldsUpdate(item);
                         System.out.printf("%nItem ID: %s  successfully updated!", item.getId());
@@ -151,7 +151,7 @@ public class StartUI {
                 }
                 // User choose update specific date and time for search item(s).
                 if (this.getUserChoose().equals("3")) {
-                    this.setItemsArrayToAction(tracker.findByCreate(consoleInput.ask("Enter date and time exist item(s) (31.12.70 23:59:59) ")));
+                    this.setItemsArrayToAction(tracker.findByCreate(input.ask("Enter date and time exist item(s) (31.12.70 23:59:59) ")));
                     for (Item item : this.getItemsArrayToAction()) {
                         tracker.fieldsUpdate(item);
                         System.out.printf("%nItem ID: %s  successfully updated!", item.getId());
@@ -165,16 +165,16 @@ public class StartUI {
                         + "1 - by ID%n"
                         + "2 - by name%n"
                         + "3 - by create time%n");
-                this.setUserChoose(consoleInput.ask("Please choose action, and enter selected action item"));
+                this.setUserChoose(input.ask("Please choose action, and enter selected action item"));
                 // User choose delete specific item(s) for search use ID field.
                 if (this.getUserChoose().equals("1")) {
-                    this.setItemToAction(tracker.findById(consoleInput.ask("Enter exist ID to delete in items ")));
+                    this.setItemToAction(tracker.findById(input.ask("Enter exist ID to delete in items ")));
                     this.setDeletedItem(this.getItemToAction().getId());
                     tracker.delete(this.getItemToAction());
                     System.out.printf("%nItem ID: %s  successfully deleted!%n", this.getDeletedItem());
                 // User choose delete specific item(s) for search use ID field.
                 } else if (this.getUserChoose().equals("2")) {
-                    this.setItemsArrayToAction(tracker.findByName(consoleInput.ask("Enter exist name to delete item(s) ")));
+                    this.setItemsArrayToAction(tracker.findByName(input.ask("Enter exist name to delete item(s) ")));
                     for (Item item : this.getItemsArrayToAction()) {
                         this.setDeletedItem(item.getName());
                         tracker.delete(item);
@@ -183,7 +183,7 @@ public class StartUI {
                 }
                 // User choose update specific date and time for search item(s).
                 if (this.getUserChoose().equals("3")) {
-                    this.setItemsArrayToAction(tracker.findByCreate(consoleInput.ask("Enter date and time exist item(s) for deleting (31.12.70 23:59:59) ")));
+                    this.setItemsArrayToAction(tracker.findByCreate(input.ask("Enter date and time exist item(s) for deleting (31.12.70 23:59:59) ")));
                     for (Item item : this.getItemsArrayToAction()) {
                         this.setDeletedItem(tracker.convert(item.getCreate()));
                         tracker.delete(item);
@@ -197,15 +197,5 @@ public class StartUI {
                 }
             }
         }
-    }
-    /**
-     * Main method.
-     * @param args array strings
-     */
-    public static void main(String[] args) {
-        /**
-         * instance interface.
-         */
-        new StartUI().userInterface();
     }
 }

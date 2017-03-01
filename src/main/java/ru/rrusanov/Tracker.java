@@ -21,7 +21,6 @@ import static java.util.Arrays.copyOf;
  */
 public class Tracker {
     /**
-     * @{value} int - indexItems count all instance items in tracker
      * @{value} Item[] - items store all instance in tracker
      */
     private Item[] items = new Item[10];
@@ -173,7 +172,6 @@ public class Tracker {
             if (item != null && item.getCreate() != 0L && item.getCreate() == convert(userInputDate)) {
                 result[countFindItem] = item;
                 countFindItem++;
-                //printToConsoleItem(item);
             }
         }
         return copyOf(result, countFindItem);
