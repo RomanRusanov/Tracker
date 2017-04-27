@@ -9,7 +9,7 @@ package ru.rrusanov;
  */
 public class StubInput  implements Input {
     /**
-     * @{value} answers -  an array of strings which was obtained during initialization of the instance StubInput.
+     * answers -  an array of strings which was obtained during initialization of the instance StubInput.
      */
     private String[] answers;
     /**
@@ -18,17 +18,16 @@ public class StubInput  implements Input {
     private int index;
 
     /**
-     * Constructor for StubInput. Write to field 'answers'
-     * @param answers Array with strings
+     * Constructor for StubInput. Write String[] to field 'answers'.
+     * @param answers Array with type string.
      */
     public StubInput(String[] answers) {
         this.answers = answers;
     }
-
     /**
      * Method return same string wich instance StubInput was initialized.
      * @param question String
-     * @return String
+     * @return Stringin
      */
     public String ask(String question) {
         return this.answers[index++];

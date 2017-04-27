@@ -23,5 +23,4 @@ public class StubInputTest {
 
         Assert.assertThat(result, is(expect));
     }
-
 }

@@ -1,7 +1,7 @@
 package ru.rrusanov;
 import java.util.Scanner;
 /**
- * A class implements an input console.
+ * A class implements an input from console.
  *
  * @author Roman Rusanov
  * @version 0.1
@@ -18,7 +18,7 @@ public class ConsoleInput implements Input {
      * @return string what user enter from console
      */
     public String ask(String question) {
-        System.out.printf("%n%s ", question);
+        System.out.printf("%s ", question);
         return scanner.nextLine();
     }
 }

@@ -114,7 +114,7 @@ public class Tracker {
     }
 
     /**
-     * printed item to console.
+     * printed single item to console.
      * @param item item for print
      */
     public void printToConsoleItem(Item item) {
@@ -131,34 +131,53 @@ public class Tracker {
                                                                        item.getComment());
     }
     /**
-     * print to console array items.
+     * print array of items to console.
      * @param item array items
      */
     public void printToConsoleItem(Item[] item) {
         for (Item i:item) {
-            System.out.printf("%n---------------------------------------%n "
-                            + "ID: %s%n "
-                            + "name: %s%n "
-                            + "description: %s%n "
-                            + "create time: %s%n "
-                            + "comment: %s%n"
-                            + "---------------------------------------%n", i.getId(),
-                                                                         i.getName(),
-                                                                         i.getDescription(),
-                                                                         convert(i.getCreate()),
-                                                                         i.getComment());
+            if (i != null) {
+                System.out.printf("---------------------------------------%n "
+                                + "ID: %s%n "
+                                + "name: %s%n "
+                                + "description: %s%n "
+                                + "create time: %s%n "
+                                + "comment: %s%n"
+                                + "---------------------------------------%n",
+                        i.getId(),
+                        i.getName(),
+                        i.getDescription(),
+                        convert(i.getCreate()),
+                        i.getComment());
+            }
         }
     }
     /**
      * update filds (name, description, date time, comment) of new value.
      * @param item item for update
+     * @param input input data
      */
-    public void fieldsUpdate(Item item) {
-        Input consoleInput = new ConsoleInput();
-        item.setName(consoleInput.ask("Enter new name "));
-        item.setDescription(consoleInput.ask("Enter new description "));
-        item.setCreate(convert(consoleInput.ask("Enter new date and time(31.12.1970 23:59:59) ")));
-        item.setComment(consoleInput.ask("Enter new comment "));
+    public void fieldsUpdate(Item item, Input input) {
+
+        String name = input.ask("Enter new name(or press Enter to leave old value):");
+        if (!"".equals(name)) {
+            item.setName(name);
+        }
+
+        String desc = input.ask("Enter new description(or press Enter to leave old value):");
+        if (!"".equals(desc)) {
+            item.setDescription(desc);
+        }
+
+        String create = input.ask("Enter new date and time(Format - 31.12.1970 23:59:59)(or press Enter to leave old value):");
+        if (!"".equals(create)) {
+            item.setCreate(convert(create));
+        }
+
+        String comm = input.ask("Enter new comment(or press Enter to leave old value):");
+        if (!"".equals(comm)) {
+            item.setComment(comm);
+        }
     }
     /**
      * search in tracker items with math date and time.
