@@ -12,21 +12,25 @@ public class StartUI {
      * Input interface get data.
      */
     private Input input;
-
+    /**
+     * Tracker instance contain all items.
+     */
+    private Tracker tracker;
     /**
      * Constructor encapsulate tracker and input.
      * @param input Input interface get data.
+     * @param tracker Tracker inatance contain items.
      */
-    public StartUI(Input input) {
+    public StartUI(Input input, Tracker tracker) {
         this.input = input;
+        this.tracker = tracker;
     }
 
     /**
      * Initialize Menu.
      */
     public void init() {
-        Tracker tracker = new Tracker();
-        MenuTracker menu = new MenuTracker(tracker, this.input);
+        MenuTracker menu = new MenuTracker(this.tracker, this.input);
         menu.fillActions();
         do {
             menu.show();
@@ -40,7 +44,7 @@ public class StartUI {
      */
     public static void main(String[] args) {
         Input input = new ConsoleInput();
-        new StartUI(input).init();
+        new StartUI(input, new Tracker()).init();
 
     }
 }
