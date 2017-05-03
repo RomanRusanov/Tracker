@@ -1,7 +1,7 @@
 package ru.rrusanov;
 
 /**
- * Class .
+ * Class need for check console input.
  *
  * @author Roman Rusanov
  * @version 0.1

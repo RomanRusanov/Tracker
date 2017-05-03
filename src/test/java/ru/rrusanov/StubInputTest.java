@@ -5,11 +5,11 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 
 /**
- * Class .
+ * Class test StubInput.
  *
  * @author Roman Rusanov
  * @version 0.1
- * @since 08.02.17
+ * @since 03.05.17
  */
 public class StubInputTest {
     /**
@@ -17,10 +17,12 @@ public class StubInputTest {
      */
     @Test
     public void thenStubInputAskInvokeWithStringWhenReturnSameString() {
-        final String expect = "Test String!";
-        final Input stubInput = new StubInput(new String[]{"Test String!"});
-        final String result = stubInput.ask("");
-
-        Assert.assertThat(result, is(expect));
+        final String[] expect = {"Test String!", "1", "2", "3"};
+        final Input stubInput = new StubInput(new String[]{"Test String!", "1", "2", "3"});
+        for (int i = 0; i < expect.length; i++) {
+            final String result = stubInput.ask("");
+            String expectFor = expect[i];
+            Assert.assertThat(result, is(expectFor));
+        }
     }
 }
