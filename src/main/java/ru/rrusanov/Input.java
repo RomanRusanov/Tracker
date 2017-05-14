@@ -14,5 +14,10 @@ public interface Input {
      * @return String
      */
     String ask(String question);
-
+    /**
+     * @param question String.
+     * @param range The possible range the array of values.
+     * @return Input int.
+     */
+    int ask(String question, int[] range);
 }

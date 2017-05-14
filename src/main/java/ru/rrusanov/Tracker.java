@@ -158,7 +158,6 @@ public class Tracker {
      * @param input input data
      */
     public void fieldsUpdate(Item item, Input input) {
-
         String name = input.ask("Enter new name(or press Enter to leave old value):");
         if (!"".equals(name)) {
             item.setName(name);
@@ -168,8 +167,7 @@ public class Tracker {
         if (!"".equals(desc)) {
             item.setDescription(desc);
         }
-
-        String create = input.ask("Enter new date and time(Format - 31.12.1970 23:59:59)(or press Enter to leave old value):");
+        String create = input.ask("Enter new date and time(31.12.1970 23:59:59)(or press Enter to leave old value):");
         if (!"".equals(create)) {
             item.setCreate(convert(create));
         }
@@ -215,12 +213,16 @@ public class Tracker {
     public long convert(String userInputDate) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
         Date date = new Date();
-
-        try {
-            date = simpleDateFormat.parse(userInputDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        boolean incorret = true;
+        do {
+            try {
+                date = simpleDateFormat.parse(userInputDate);
+                incorret = false;
+            } catch (ParseException e) {
+                System.out.println("Incorrect input!");
+                userInputDate = new ConsoleInput().ask("Please enter correct(31.12.1970 23:59:59):");
+            }
+        } while (incorret);
         return date.getTime();
     }
 }

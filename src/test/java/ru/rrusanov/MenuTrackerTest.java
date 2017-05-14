@@ -21,6 +21,19 @@ import java.io.PrintStream;
  */
 public class MenuTrackerTest {
     /**
+     * Test check menu range.
+     */
+    @Test
+    public void thenMenuHaveFiveItemsWhenMethodGetActionsRangeReturnSameValue() {
+        MenuTracker menuTracker = new MenuTracker(new Tracker(), new StubInput(new String[] {"y"}));
+        menuTracker.fillActions();
+
+        final int expect = 5;
+        final int result = menuTracker.getActionsRange().length;
+        assertThat(result, is(expect));
+    }
+
+    /**
      * Test Main menu.
      */
     @Test
@@ -35,16 +48,12 @@ public class MenuTrackerTest {
         menuTracker.fillActions();
         menuTracker.show();
 
-        StringBuilder stringBuilder = new StringBuilder(
-                  "0. Add the new item." + END_LINE
+        final String expect = byteArrayOutputStream.toString();
+        final String result = "0. Add the new item." + END_LINE
                 + "1. Show all items." + END_LINE
                 + "2. Edit item." + END_LINE
                 + "3. Delete item." + END_LINE
-                + "4. Search item." + END_LINE
-        );
-
-        final String expect = byteArrayOutputStream.toString();
-        final String result = stringBuilder.toString();
+                + "4. Search item." + END_LINE;
         assertThat(result, is(expect));
     }
     /**
@@ -84,6 +93,27 @@ public class MenuTrackerTest {
         assertThat(resultName, is(expectName));
     }
     /**
+     * Test Inner class EditItem if ID enter incorrect.
+     */
+    @Test
+    public void thenItemToEditEnterIncorrectWhenPrintMessage() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("Correct"));
+        final String END_LINE = System.getProperty("line.separator");
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(byteArrayOutputStream);
+        System.setOut(printStream);
+
+        MenuTracker menuTracker = new MenuTracker(new Tracker(), new StubInput(new String[]{"Wrong"}));
+        menuTracker.fillActions();
+        menuTracker.select(2);
+
+        final String expect = byteArrayOutputStream.toString();
+        final String result = "Item ID:Wrong not found, please enter correct ID. " + END_LINE;
+        assertThat(result, is(expect));
+    }
+    /**
      * Test Inner class SearchItem.
      */
     @Test
@@ -117,5 +147,26 @@ public class MenuTrackerTest {
 
         assertNotSame(itemAfterDelete, itemBeforeDelete);
 
+    }
+    /**
+     * Test Inner class DeleteItem if ID enter incorrect.
+     */
+    @Test
+    public void thenItemToDeleteEnterIncorrectWhenPrintMessage() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("Correct"));
+        final String END_LINE = System.getProperty("line.separator");
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(byteArrayOutputStream);
+        System.setOut(printStream);
+
+        MenuTracker menuTracker = new MenuTracker(new Tracker(), new StubInput(new String[] {"Wrong"}));
+        menuTracker.fillActions();
+        menuTracker.select(3);
+
+        final String expect = byteArrayOutputStream.toString();
+        final String result = "Item ID:Wrong not found, please enter correct ID. " + END_LINE;
+        assertThat(result, is(expect));
     }
 }

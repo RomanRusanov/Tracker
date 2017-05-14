@@ -30,7 +30,18 @@ public class MenuTracker {
         this.tracker = tracker;
         this.input = input;
     }
-
+    /**
+     * Getter return int value of menu range.
+     * @return int value.
+     */
+    public int[] getActionsRange() {
+        int length = this.actions.length;
+        int[] range = new int[length];
+        for (int i = 0; i < length; i++) {
+            range[i] = i;
+        }
+        return range;
+    }
     /**
      * Initialize Menu actions[].
      */
@@ -125,7 +136,7 @@ public class MenuTracker {
     /**
      * Inner class edit fields of the item.
      */
-    private static class EditItem implements UserActions {
+    private class EditItem implements UserActions {
         /**
          * This key unique for each actions.
          * @return unique value in arrayActions.
@@ -140,8 +151,13 @@ public class MenuTracker {
          * @param tracker Main container.
          */
         public void execute(Input input, Tracker tracker) {
-            Item editItem = tracker.findById(input.ask("Enter ID item to edit:"));
-            tracker.fieldsUpdate(editItem, input);
+            String itemEditID = input.ask("Enter ID item to edit:");
+            Item editItem = tracker.findById(itemEditID);
+            if (editItem != null) {
+                tracker.fieldsUpdate(editItem, input);
+            } else {
+                System.out.println("Item ID:" + itemEditID + " not found, please enter correct ID. ");
+            }
         }
 
         /**
@@ -155,7 +171,7 @@ public class MenuTracker {
     /**
      * Inner class delete item from the tracker.
      */
-    private static class DeleteItem implements UserActions {
+    private class DeleteItem implements UserActions {
         /**
          * This key unique for each actions.
          * @return unique value in arrayActions.
@@ -170,8 +186,14 @@ public class MenuTracker {
          * @param tracker Main container.
          */
         public void execute(Input input, Tracker tracker) {
-            Item deleteItem = tracker.findById(input.ask("Enter ID item to delete:"));
-            tracker.delete(deleteItem);
+            String itemDeleteID = input.ask("Enter ID item to delete:");
+            Item deleteItem = tracker.findById(itemDeleteID);
+            if (deleteItem != null) {
+                tracker.delete(deleteItem);
+                System.out.println("Item ID:" + itemDeleteID + " success deleted.");
+            } else {
+                System.out.println("Item ID:" + itemDeleteID + " not found, please enter correct ID. ");
+            }
         }
 
         /**
