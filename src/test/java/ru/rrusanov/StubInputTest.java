@@ -25,4 +25,13 @@ public class StubInputTest {
             Assert.assertThat(result, is(expectFor));
         }
     }
+    /**
+     * check method must throw MenuOutException.
+     */
+    @Test(expected = MenuOutException.class)
+    public void thenInputIncorrectWhenThrowMenuOutException() {
+        //Tracker tracker = new Tracker();
+        final int[] range = {0, 1, 2, 3, 4};
+        int stubInput = new StubInput(new String[] {"-1"}).ask("", range);
+    }
 }
