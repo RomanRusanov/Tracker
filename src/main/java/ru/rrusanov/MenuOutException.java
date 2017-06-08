@@ -9,7 +9,7 @@ package ru.rrusanov;
  */
 public class MenuOutException extends RuntimeException {
     /**
-     * Construcor return to parent sting with exception.
+     * Construcor return to parent string with exception.
      * @param msg String.
      */
     public MenuOutException(String msg) {

@@ -48,8 +48,8 @@ public class MenuTrackerTest {
         menuTracker.fillActions();
         menuTracker.show();
 
-        final String expect = byteArrayOutputStream.toString();
-        final String result = "0. Add the new item." + END_LINE
+        final String result = byteArrayOutputStream.toString();
+        final String expect = "0. Add new item." + END_LINE
                 + "1. Show all items." + END_LINE
                 + "2. Edit item." + END_LINE
                 + "3. Delete item." + END_LINE

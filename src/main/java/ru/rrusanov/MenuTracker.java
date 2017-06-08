@@ -20,7 +20,10 @@ public class MenuTracker {
      * Contain all actions for tracker items.
      */
     private UserActions[] actions = new UserActions[5];
-
+    /**
+     * Counter of actions in tracker.
+     */
+    private int position = 0;
     /**
      * Constructor encapsulate tracker and input.
      * @param tracker Base class Tracker.
@@ -42,15 +45,24 @@ public class MenuTracker {
         }
         return range;
     }
+
     /**
      * Initialize Menu actions[].
      */
     public void fillActions() {
-        this.actions[0] = new AddItem();
-        this.actions[1] = new ShowItems();
-        this.actions[2] = new EditItem();
-        this.actions[3] = new DeleteItem();
-        this.actions[4] = new SearchItem();
+        this.actions[position++] = new AddItem(0, "Add new item.");
+        this.actions[position++] = new ShowItems(1, "Show all items.");
+        this.actions[position++] = new EditItem(2, "Edit item.");
+        this.actions[position++] = new DeleteItem(3, "Delete item.");
+        this.actions[position++] = new SearchItem(4, "Search item.");
+    }
+
+    /**
+     * Adding action to array of actions for tracker menu.
+     * @param action action to be added to array of action
+     */
+    public void addActions(UserActions action) {
+        this.actions[position++] = action;
     }
 
     /**
@@ -75,13 +87,23 @@ public class MenuTracker {
     /**
      * Inner class add item to tracker.
      */
-    private class AddItem implements UserActions {
+    private class AddItem extends BaseActions {
+
+        /**
+         * Constructor get parameter key, name.
+         * @param key unique id action in array of actions
+         * @param name title action for menu
+         */
+        AddItem(int key, String name) {
+            super(key, name);
+        }
+
         /**
          * This key unique for each actions.
          * @return unique value in arrayActions.
          */
         public int key() {
-            return 0;
+            return this.getKey();
         }
 
         /**
@@ -95,25 +117,28 @@ public class MenuTracker {
             String comm = input.ask("Enter the comment for new item:");
             tracker.add(new Item(name, desc, System.currentTimeMillis(), comm));
         }
-
-        /**
-         * Print to console comment for this action.
-         * @return String to console comment for action.
-         */
-        public String info() {
-            return String.format("%s. %s%n", this.key(), "Add the new item.");
-        }
     }
+
     /**
      * Inner class show items that tracker contains.
      */
-    private static class ShowItems implements UserActions {
+    private class ShowItems extends BaseActions {
+
+        /**
+         * Constructor get parameter key, name.
+         * @param key unique id action in array of actions
+         * @param name name(title action for menu
+         */
+        ShowItems(int key, String name) {
+            super(key, name);
+        }
+
         /**
          * This key unique for each actions.
          * @return unique value in arrayActions.
          */
         public int key() {
-            return 1;
+            return this.getKey();
         }
 
         /**
@@ -124,30 +149,36 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             tracker.printToConsoleItem(tracker.findAll());
         }
-
-        /**
-         * Print to console comment for this action.
-         * @return String to console comment for action.
-         */
-        public String info() {
-            return String.format("%s. %s%n", this.key(), "Show all items.");
-        }
     }
+
     /**
      * Inner class edit fields of the item.
      */
-    private class EditItem implements UserActions {
+    private class EditItem extends BaseActions {
+
+        /**
+         * Constructor get parameter key, name.
+         *
+         * @param key  unique id action in array of actions
+         * @param name name(title action for menu
+         */
+        EditItem(int key, String name) {
+            super(key, name);
+        }
+
         /**
          * This key unique for each actions.
+         *
          * @return unique value in arrayActions.
          */
         public int key() {
-            return 2;
+            return this.getKey();
         }
 
         /**
          * Define what action should be made. Edit fields of the item.
-         * @param input Input from user
+         *
+         * @param input   Input from user
          * @param tracker Main container.
          */
         public void execute(Input input, Tracker tracker) {
@@ -159,25 +190,27 @@ public class MenuTracker {
                 System.out.println("Item ID:" + itemEditID + " not found, please enter correct ID. ");
             }
         }
-
-        /**
-         * Print to console comment for this action.
-         * @return String to console comment for action.
-         */
-        public String info() {
-            return String.format("%s. %s%n", this.key(), "Edit item.");
-        }
     }
     /**
      * Inner class delete item from the tracker.
      */
-    private class DeleteItem implements UserActions {
+    private class DeleteItem extends BaseActions {
+
+        /**
+         * Constructor get parameter key, name.
+         * @param key unique id action in array of actions
+         * @param name name(title action for menu
+         */
+        DeleteItem(int key, String name) {
+            super(key, name);
+        }
+
         /**
          * This key unique for each actions.
          * @return unique value in arrayActions.
          */
         public int key() {
-            return 3;
+            return this.getKey();
         }
 
         /**
@@ -195,25 +228,27 @@ public class MenuTracker {
                 System.out.println("Item ID:" + itemDeleteID + " not found, please enter correct ID. ");
             }
         }
-
-        /**
-         * Print to console comment for this action.
-         * @return String to console comment for action.
-         */
-        public String info() {
-            return String.format("%s. %s%n", this.key(), "Delete item.");
-        }
     }
+
     /**
      * Inner class search item from the tracker use id filed.
      */
-    private class SearchItem implements UserActions {
+    private class SearchItem extends BaseActions {
+        /**
+         * Constructor get parameter key, name.
+         * @param key unique id action in array of actions
+         * @param name name(title action for menu
+         */
+        SearchItem(int key, String name) {
+            super(key, name);
+        }
+
         /**
          * This key unique for each actions.
          * @return unique value in arrayActions.
          */
         public int key() {
-            return 4;
+            return this.getKey();
         }
 
         /**
@@ -224,14 +259,6 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             Item[] searchItem = tracker.findByName(input.ask("Enter name the item to search:"));
             tracker.printToConsoleItem(searchItem);
-        }
-
-        /**
-         * Print to console comment for this action.
-         * @return String to console comment for action.
-         */
-        public String info() {
-            return String.format("%s. %s%n", this.key(), "Search item.");
         }
     }
 }
