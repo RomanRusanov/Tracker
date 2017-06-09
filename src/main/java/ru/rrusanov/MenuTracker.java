@@ -50,11 +50,11 @@ public class MenuTracker {
      * Initialize Menu actions[].
      */
     public void fillActions() {
-        this.actions[position++] = new AddItem(0, "Add new item.");
-        this.actions[position++] = new ShowItems(1, "Show all items.");
-        this.actions[position++] = new EditItem(2, "Edit item.");
-        this.actions[position++] = new DeleteItem(3, "Delete item.");
-        this.actions[position++] = new SearchItem(4, "Search item.");
+        this.actions[position] = new AddItem(position++, "Add new item.");
+        this.actions[position] = new ShowItems(position++, "Show all items.");
+        this.actions[position] = new EditItem(position++, "Edit item.");
+        this.actions[position] = new DeleteItem(position++, "Delete item.");
+        this.actions[position] = new SearchItem(position++, "Search item.");
     }
 
     /**
