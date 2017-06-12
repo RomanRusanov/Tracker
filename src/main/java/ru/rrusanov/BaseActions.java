@@ -32,14 +32,14 @@ abstract class BaseActions implements UserActions {
     public String getName() {
         return this.name;
     }
+
     /**
-     * Getter for key field.
+     * Unique key field.
      * @return unique id action in array of actions
      */
-    public int getKey() {
+    public int key() {
         return this.key;
     }
-
     /**
      * Print to console comment for action.
      * @return String to console id and comment for action.

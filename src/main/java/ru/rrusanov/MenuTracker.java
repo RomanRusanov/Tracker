@@ -99,14 +99,6 @@ public class MenuTracker {
         }
 
         /**
-         * This key unique for each actions.
-         * @return unique value in arrayActions.
-         */
-        public int key() {
-            return this.getKey();
-        }
-
-        /**
          * Define what action should be made. Add item to tracker.
          * @param input Input from user
          * @param tracker Main container.
@@ -134,14 +126,6 @@ public class MenuTracker {
         }
 
         /**
-         * This key unique for each actions.
-         * @return unique value in arrayActions.
-         */
-        public int key() {
-            return this.getKey();
-        }
-
-        /**
          * Define what action should be made. Show items that tracker contains.
          * @param input Input from user
          * @param tracker Main container.
@@ -164,15 +148,6 @@ public class MenuTracker {
          */
         EditItem(int key, String name) {
             super(key, name);
-        }
-
-        /**
-         * This key unique for each actions.
-         *
-         * @return unique value in arrayActions.
-         */
-        public int key() {
-            return this.getKey();
         }
 
         /**
@@ -206,14 +181,6 @@ public class MenuTracker {
         }
 
         /**
-         * This key unique for each actions.
-         * @return unique value in arrayActions.
-         */
-        public int key() {
-            return this.getKey();
-        }
-
-        /**
          * Define what action should be made. Delete item from the tracker.
          * @param input Input from user
          * @param tracker Main container.
@@ -241,14 +208,6 @@ public class MenuTracker {
          */
         SearchItem(int key, String name) {
             super(key, name);
-        }
-
-        /**
-         * This key unique for each actions.
-         * @return unique value in arrayActions.
-         */
-        public int key() {
-            return this.getKey();
         }
 
         /**
