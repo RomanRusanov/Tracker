@@ -8,11 +8,6 @@ package ru.rrusanov;
  * @since 23.04.17
  */
 public interface UserActions {
-    /**
-     * This key unique for each actions.
-     * @return unique value in arrayActions.
-     */
-    int key();
 
     /**
      * Define what action should be made.

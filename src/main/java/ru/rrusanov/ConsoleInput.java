@@ -1,4 +1,5 @@
 package ru.rrusanov;
+import java.util.List;
 import java.util.Scanner;
 /**
  * A class implements an input from console.
@@ -27,7 +28,7 @@ public class ConsoleInput implements Input {
      * @param range    The possible range the array of values.
      * @return Input int.
      */
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         int key = Integer.valueOf(this.ask(question));
         boolean exist = false;
         for (int value: range) {

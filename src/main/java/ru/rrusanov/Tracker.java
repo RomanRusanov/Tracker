@@ -4,11 +4,10 @@ import ru.rrusanov.models.Item;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
-import static java.util.Arrays.copyOf;
 
 /**
  * Class store items, can added new items, find item by id.
@@ -21,20 +20,16 @@ import static java.util.Arrays.copyOf;
  */
 public class Tracker {
     /**
-     * @{value} Item[] - items store all instance in tracker
+     * @{value} ArrayList - items store all instance in tracker
      */
-    private Item[] items = new Item[10];
+    private ArrayList<Item> items = new ArrayList<>();
     /**
-     * @{value} indexItems int index for array elements of items
-     */
-    private int indexItems = 0;
-    /**
-     * The methods add item to the items array, index increment for every elements.
+     * The methods add item to the items collection.
      * @param item instance of item
      * @return new item
      */
     public Item add(Item item) {
-        this.items[indexItems++] = item;
+        this.items.add(item);
         return item;
     }
     /**
@@ -54,106 +49,71 @@ public class Tracker {
         return result;
     }
     /**
-     * The method takes a string and looks for it in the items array by field name,
-     * returns the array with items has this string.
+     * The method takes a string and looks for it in the items collection by field name,
+     * returns the other collection with items has this string.
      * @param key String for find in array
-     * @return array Item[] with mach key string
+     * @return ArrayList with mach items by name field.
      */
-    public Item[] findByName(String key) {
+    public ArrayList<Item> findByName(String key) {
 
-        Item[] resultItemArray = new Item[items.length];
-        int indexResultArray = 0;
+        ArrayList<Item> resultItemArray = new ArrayList<>();
         for (Item item : items) {
             if (item != null && item.getName() != null && item.getName().equals(key)) {
-                resultItemArray[indexResultArray] = item;
-                indexResultArray++;
+                resultItemArray.add(item);
             }
         }
-        return copyOf(resultItemArray, indexResultArray);
+        return resultItemArray;
     }
     /**
-     * The method takes an item to update the id field it finds in the items array.
-     * @param itemUpdate Item to need update
+     * The method takes an item to update the id field it finds in the items collection.
+     * @param itemUpdate Item to need update.
      */
     public void update(Item itemUpdate) {
-        for (int i = 0; i < items.length - 1; i++) {
-            if (items[i] != null && itemUpdate.getId().equals(items[i].getId())) {
-                items[i] = itemUpdate;
+        for (Item item:items) {
+            if (itemUpdate.getId().equals(item.getId())) {
+                this.items.set(this.items.indexOf(item), itemUpdate);
                 break;
             }
         }
     }
     /**
-     * The method takes an item to delete, the id field it finds in the items array,
-     * finded item are assigned null.
+     * The method takes an item to delete, the id field it finds in the items collection,
+     * founded item are remove from collection.
      * @param itemDelete Item to delete
      */
     public void delete(Item itemDelete) {
-        for (int i = 0; i < items.length - 1; i++) {
-            if (items[i] != null && itemDelete.getId().equals(items[i].getId())) {
-                items[i] = null;
-                break;
-            }
-        }
+        this.items.remove(this.items.indexOf(itemDelete));
     }
     /**
-     * The Method return array all items, exluding null items.
-     * @return Item[] - items array
+     * The Method return all items.
+     * @return items collection.
      */
-    public Item[] findAll() {
-
-        Item[] resultItemArray = new Item[items.length];
-        int indexResultArray = 0;
-        for (Item item : items) {
-            if (item != null) {
-                resultItemArray[indexResultArray] = item;
-                indexResultArray++;
-            }
-        }
-        return copyOf(resultItemArray, indexResultArray);
+    public ArrayList<Item> findAll() {
+        return items;
     }
 
     /**
-     * printed single item to console.
-     * @param item item for print
+     * Print items to console.
+     * @param item Items to print.
      */
-    public void printToConsoleItem(Item item) {
-        System.out.printf("%n---------------------------------------%n "
-                          + "ID: %s%n "
-                          + "name: %s%n "
-                          + "description: %s%n "
-                          + "create time: %s%n "
-                          + "comment: %s%n"
-                          + "---------------------------------------%n", item.getId(),
-                                                                       item.getName(),
-                                                                       item.getDescription(),
-                                                                       convert(item.getCreate()),
-                                                                       item.getComment());
-    }
-    /**
-     * print array of items to console.
-     * @param item array items
-     */
-    public void printToConsoleItem(Item[] item) {
+    public void printToConsoleItem(ArrayList<Item> item) {
         for (Item i:item) {
-            if (i != null) {
-                System.out.printf("---------------------------------------%n "
-                                + "ID: %s%n "
-                                + "name: %s%n "
-                                + "description: %s%n "
-                                + "create time: %s%n "
-                                + "comment: %s%n"
-                                + "---------------------------------------%n",
-                        i.getId(),
-                        i.getName(),
-                        i.getDescription(),
-                        convert(i.getCreate()),
-                        i.getComment());
-            }
+            System.out.printf("---------------------------------------%n "
+                            + "ID: %s%n "
+                            + "name: %s%n "
+                            + "description: %s%n "
+                            + "create time: %s%n "
+                            + "comment: %s%n"
+                            + "---------------------------------------%n",
+                    i.getId(),
+                    i.getName(),
+                    i.getDescription(),
+                    convert(i.getCreate()),
+                    i.getComment());
         }
     }
     /**
-     * update filds (name, description, date time, comment) of new value.
+     * Update fields (name, description, date time, comment) of new value.
      * @param item item for update
      * @param input input data
      */
@@ -178,23 +138,21 @@ public class Tracker {
         }
     }
     /**
-     * search in tracker items with math date and time.
+     * Search in tracker items with math date and time.
      * @param userInputDate user selected date and time to search
-     * @return array item match value
+     * @return items match by create date.
      */
-    public Item[] findByCreate(String userInputDate) {
-        Item[] result = new Item[items.length];
-        int countFindItem = 0;
+    public ArrayList<Item> findByCreate(String userInputDate) {
+        ArrayList<Item> result = new ArrayList<>();
         for (Item item : items) {
             if (item != null && item.getCreate() != 0L && item.getCreate() == convert(userInputDate)) {
-                result[countFindItem] = item;
-                countFindItem++;
+                result.add(item);
             }
         }
-        return copyOf(result, countFindItem);
+        return result;
     }
     /**
-     * convert value millisecond to string date and time example (31.12.1970 23:59:59).
+     * Convert value millisecond to string date and time example (31.12.1970 23:59:59).
      * @param millis vaule in milliseconds
      * @return string date and time "31.12.1970 23:59:59"
      */
@@ -206,7 +164,7 @@ public class Tracker {
         return timeString;
     }
     /**
-     * convert string value date and time "31.12.1970 23:59:59" to millisecond value.
+     * Convert string value date and time "31.12.1970 23:59:59" to millisecond value.
      * @param userInputDate string "31.12.1970 23:59:59"
      * @return long in milliseconds
      */

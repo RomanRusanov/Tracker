@@ -1,5 +1,7 @@
 package ru.rrusanov;
 
+import java.util.List;
+
 /**
  * Class Run UI with Menu.
  *
@@ -19,7 +21,7 @@ public class StartUI {
     /**
      * Possible range of menu tracker.
      */
-    private int[] range;
+    private List range;
     /**
      * Constructor encapsulate tracker and input.
      * @param input Input interface get data.

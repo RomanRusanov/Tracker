@@ -10,6 +10,7 @@ import static org.junit.Assert.assertNotSame;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 
 /**
@@ -29,7 +30,7 @@ public class MenuTrackerTest {
         menuTracker.fillActions();
 
         final int expect = 5;
-        final int result = menuTracker.getActionsRange().length;
+        final int result = menuTracker.getActionsRange().size();
         assertThat(result, is(expect));
     }
 
@@ -65,9 +66,9 @@ public class MenuTrackerTest {
         MenuTracker menuTracker = new MenuTracker(tracker, new StubInput(new String[] {"Test Name!", "1", "1"}));
         menuTracker.fillActions();
         menuTracker.select(0);
-        Item[] result = tracker.findByName("Test Name!");
+        ArrayList<Item> result = tracker.findByName("Test Name!");
 
-        String resultName = result[0].getName();
+        String resultName = result.get(0).getName();
         String expectName = "Test Name!";
         assertThat(resultName, is(expectName));
     }
@@ -81,14 +82,14 @@ public class MenuTrackerTest {
         menuTrackerAddAction.fillActions();
         menuTrackerAddAction.select(0);
 
-        Item[] itemToFind = tracker.findByName("Added Name!");
-        String idItemToEdit = itemToFind[0].getId();
+        ArrayList<Item> itemToFind = tracker.findByName("Added Name!");
+        String idItemToEdit = itemToFind.get(0).getId();
         MenuTracker menuTrackerEditAction = new MenuTracker(tracker, new StubInput(new String[] {idItemToEdit, "Edited Name!", "", "", ""}));
         menuTrackerEditAction.fillActions();
         menuTrackerEditAction.select(2);
-        Item[] result = tracker.findByName("Edited Name!");
+        ArrayList<Item> result = tracker.findByName("Edited Name!");
 
-        String resultName = result[0].getName();
+        String resultName = result.get(0).getName();
         String expectName = "Edited Name!";
         assertThat(resultName, is(expectName));
     }
@@ -123,11 +124,11 @@ public class MenuTrackerTest {
         menuTrackerAddAction.fillActions();
         menuTrackerAddAction.select(0);
 
-        Item[] itemToFind = tracker.findByName("Find Name!");
+        ArrayList<Item> itemToFind = tracker.findByName("Find Name!");
         MenuTracker menuTrackerFindAction = new MenuTracker(tracker, new StubInput(new String[] {"Find Name"}));
         menuTrackerFindAction.fillActions();
         menuTrackerFindAction.select(4);
-        String result = itemToFind[0].getId();
+        String result = itemToFind.get(0).getId();
 
         assertNotNull(result);
     }

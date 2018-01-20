@@ -2,6 +2,10 @@ package ru.rrusanov;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Arrays;
+
 import static org.hamcrest.core.Is.is;
 
 /**
@@ -31,7 +35,7 @@ public class StubInputTest {
     @Test(expected = MenuOutException.class)
     public void thenInputIncorrectWhenThrowMenuOutException() {
         //Tracker tracker = new Tracker();
-        final int[] range = {0, 1, 2, 3, 4};
+        final List<Integer> range = Arrays.asList(new Integer[] {0, 1, 2, 3, 4});
         int stubInput = new StubInput(new String[] {"-1"}).ask("", range);
     }
 }

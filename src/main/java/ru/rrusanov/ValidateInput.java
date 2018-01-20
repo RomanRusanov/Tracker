@@ -1,5 +1,7 @@
 package ru.rrusanov;
 
+import java.util.List;
+
 /**
  * Class Check input valid.
  *
@@ -13,7 +15,7 @@ public class ValidateInput extends ConsoleInput {
      * @param range The possible range the array of values.
      * @return Input int.
      */
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         boolean invalid = true;
         int value = -1;
         do {

@@ -3,6 +3,9 @@ package ru.rrusanov;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.rrusanov.models.Item;
+
+import java.util.ArrayList;
+
 import static org.hamcrest.core.Is.is;
 /***
  * Class test all Tracker methods.
@@ -19,7 +22,6 @@ public class TrackerTest {
     public void thenItemCreateWhenReturnItemLink() {
 
         Tracker tracker = new Tracker();
-
         Assert.assertNotNull(tracker.add(new Item()));
     }
     /**
@@ -48,16 +50,15 @@ public class TrackerTest {
         Item beforeUpdate;
         Item afterUpdate;
         final String expectId = "5050";
-
+        // Fill collection with random items.
         for (int i = 0; i < 8; i++) {
             tracker.add(new Item());
         }
-
+        // Check update process.
         tracker.add(new Item(expectId));
         beforeUpdate = tracker.findById(expectId);
         tracker.update(new Item(expectId));
         afterUpdate = tracker.findById(expectId);
-
         Assert.assertNotEquals(afterUpdate, is(beforeUpdate));
     }
     /**
@@ -89,7 +90,7 @@ public class TrackerTest {
     @Test
     public void thenFindAllWhenReturnArrayWithOutNullItems() {
 
-        Item[] returnArray;
+        ArrayList<Item> returnArray;
         Tracker tracker = new Tracker();
 
         for (int i = 0; i < 7; i++) {
@@ -109,7 +110,7 @@ public class TrackerTest {
     public void thenFindItemByNameWhenReturnItemsInArray() {
 
         Tracker tracker = new Tracker();
-        Item[] resultArray;
+        ArrayList<Item> resultArray;
         String keyNameToFind = "Name1";
 
         tracker.add(new Item(keyNameToFind, "Desc1", 100L, "Commen1"));
@@ -155,7 +156,7 @@ public class TrackerTest {
     public void thenSearchingDateAndTimeEqualsDateAndTimeInItemsArrayWhenReturnThem() {
         Tracker tracker = new Tracker();
         tracker.add(new Item("name", "desc",  tracker.convert("01.01.70 12:00:00"), "comm"));
-        final Item[] result = tracker.findByCreate("01.01.70 12:00:00");
-        Assert.assertTrue(result[0].getCreate() == tracker.convert("01.01.70 12:00:00"));
+        final ArrayList<Item> result = tracker.findByCreate("01.01.70 12:00:00");
+        Assert.assertTrue(result.get(0).getCreate() == tracker.convert("01.01.70 12:00:00"));
     }
 }

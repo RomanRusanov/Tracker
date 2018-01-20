@@ -1,5 +1,8 @@
 package ru.rrusanov;
 import ru.rrusanov.models.Item;
+
+import java.util.ArrayList;
+
 /**
  * Menu for user interaction.
  *
@@ -19,11 +22,7 @@ public class MenuTracker {
     /**
      * Contain all actions for tracker items.
      */
-    private UserActions[] actions = new UserActions[5];
-    /**
-     * Counter of actions in tracker.
-     */
-    private int position = 0;
+    private ArrayList<UserActions> actions = new ArrayList<>();
     /**
      * Constructor encapsulate tracker and input.
      * @param tracker Base class Tracker.
@@ -37,24 +36,23 @@ public class MenuTracker {
      * Getter return int value of menu range.
      * @return int value.
      */
-    public int[] getActionsRange() {
-        int length = this.actions.length;
-        int[] range = new int[length];
-        for (int i = 0; i < length; i++) {
-            range[i] = i;
+    public ArrayList<Integer> getActionsRange() {
+        ArrayList<Integer> actionRange = new ArrayList<>();
+        for (int i = 0; i < actions.size(); i++) {
+            actionRange.add(i);
         }
-        return range;
+        return actionRange;
     }
 
     /**
-     * Initialize Menu actions[].
+     * Initialize Menu actions, add actions to list.
      */
     public void fillActions() {
-        this.actions[position] = new AddItem(position++, "Add new item.");
-        this.actions[position] = new ShowItems(position++, "Show all items.");
-        this.actions[position] = new EditItem(position++, "Edit item.");
-        this.actions[position] = new DeleteItem(position++, "Delete item.");
-        this.actions[position] = new SearchItem(position++, "Search item.");
+        this.actions.add(new AddItem("0. Add new item."));
+        this.actions.add(new ShowItems("1. Show all items."));
+        this.actions.add(new EditItem("2. Edit item."));
+        this.actions.add(new DeleteItem("3. Delete item."));
+        this.actions.add(new SearchItem("4. Search item."));
     }
 
     /**
@@ -62,7 +60,7 @@ public class MenuTracker {
      * @param action action to be added to array of action
      */
     public void addActions(UserActions action) {
-        this.actions[position++] = action;
+        this.actions.add(action);
     }
 
     /**
@@ -70,7 +68,7 @@ public class MenuTracker {
      * @param key unique value of action.
      */
     public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+        this.actions.get(key).execute(input, tracker);
     }
 
     /**
@@ -78,9 +76,7 @@ public class MenuTracker {
      */
     public void show() {
         for (UserActions actions: this.actions) {
-            if (actions != null) {
                 System.out.print(actions.info());
-            }
         }
     }
 
@@ -91,11 +87,10 @@ public class MenuTracker {
 
         /**
          * Constructor get parameter key, name.
-         * @param key unique id action in array of actions
          * @param name title action for menu
          */
-        AddItem(int key, String name) {
-            super(key, name);
+        AddItem(String name) {
+            super(name);
         }
 
         /**
@@ -118,11 +113,10 @@ public class MenuTracker {
 
         /**
          * Constructor get parameter key, name.
-         * @param key unique id action in array of actions
-         * @param name name(title action for menu
+         * @param name name(title action for menu).
          */
-        ShowItems(int key, String name) {
-            super(key, name);
+        ShowItems(String name) {
+            super(name);
         }
 
         /**
@@ -143,11 +137,10 @@ public class MenuTracker {
         /**
          * Constructor get parameter key, name.
          *
-         * @param key  unique id action in array of actions
-         * @param name name(title action for menu
+         * @param name name(title action for menu).
          */
-        EditItem(int key, String name) {
-            super(key, name);
+        EditItem(String name) {
+            super(name);
         }
 
         /**
@@ -173,11 +166,10 @@ public class MenuTracker {
 
         /**
          * Constructor get parameter key, name.
-         * @param key unique id action in array of actions
-         * @param name name(title action for menu
+         * @param name name(title action for menu).
          */
-        DeleteItem(int key, String name) {
-            super(key, name);
+        DeleteItem(String name) {
+            super(name);
         }
 
         /**
@@ -203,11 +195,10 @@ public class MenuTracker {
     private class SearchItem extends BaseActions {
         /**
          * Constructor get parameter key, name.
-         * @param key unique id action in array of actions
-         * @param name name(title action for menu
+         * @param name name(title action for menu).
          */
-        SearchItem(int key, String name) {
-            super(key, name);
+        SearchItem(String name) {
+            super(name);
         }
 
         /**
@@ -216,7 +207,7 @@ public class MenuTracker {
          * @param tracker Main container.
          */
         public void execute(Input input, Tracker tracker) {
-            Item[] searchItem = tracker.findByName(input.ask("Enter name the item to search:"));
+            ArrayList<Item> searchItem = tracker.findByName(input.ask("Enter name the item to search:"));
             tracker.printToConsoleItem(searchItem);
         }
     }

@@ -11,7 +11,7 @@
  *
  * MenuTracker.java Menu for user interaction.
  * Methods:
- *  void fillActions() The initialize Menu actions[].
+ *  void fillActions() Initialize Menu actions, add actions to list.
  *  void show() The show menu with actions list.
  * Inner class:
  *  AddItem implements UserActions. Add item to tracker.
@@ -31,12 +31,20 @@
  *
  * Tracker.java Contain items.
  * Methods:
- *  Item add(Item) The methods add item to the items array, index increment for every elements.
- *  Item findById(String id) The method takes a string and looks for it in the items array by field id, returns the item which has this string.
- *  void update(Item itemUpdate) The method takes an item to update the id field it finds in the items array.
- *  void delete(Item itemDelete) The method takes an item to delete, the id field it finds in the items array, finded item are assigned null.
- *  Item[] findAll() The Method return array all items, exluding null items.
- *  Item[] findByName(String key) The method takes a string and looks for it in the items array by field name, returns the array with items has this string.
+ *  Item add(Item) The methods add item to the items collection.
+ *  Item findById(String id) The method takes a string and looks for it in the items collection by field name,
+ *      returns the other collection with items has this string.
+ *  void update(Item itemUpdate) The method takes an item to update the id field it finds in the items collection.
+ *  void delete(Item itemDelete) The method takes an item to delete, the id field it finds in the items collection,
+ *      founded item are remove from collection.
+ *  ArrayList<item> findAll() The Method return all items.
+ *  ArrayList<item> findByName(String key) The method takes a string and looks for it in the items array by field name,
+ *      returns the array with items has this string.
+ *  void printToConsoleItem(ArrayList<Item> item) Printed item(s) to console.
+ *  void fieldsUpdate(Item item, Input input) Update fields (name, description, date time, comment) of new value.
+ *  ArrayList<Item> findByCreate(String userInputDate) Search in tracker items with math date and time.
+ *  String convert(long millis) Convert value millisecond to string date and time example (31.12.1970 23:59:59).
+ *  long convert(String userInputDate) Convert string value date and time "31.12.1970 23:59:59" to millisecond value.
  *
  * UI.java not worked old(first try) implementation Menu functionality.
  *

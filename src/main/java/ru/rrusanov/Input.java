@@ -1,5 +1,7 @@
 package ru.rrusanov;
 
+import java.util.List;
+
 /**
  * The interface describes the input.
  *
@@ -19,5 +21,5 @@ public interface Input {
      * @param range The possible range the array of values.
      * @return Input int.
      */
-    int ask(String question, int[] range);
+    int ask(String question, List<Integer> range);
 }
