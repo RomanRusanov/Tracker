@@ -20,7 +20,7 @@ import java.util.TimeZone;
  */
 public class Tracker {
     /**
-     * @{value} ArrayList - items store all instance in tracker
+     * ArrayList - items store all instance in tracker.
      */
     private ArrayList<Item> items = new ArrayList<>();
     /**
@@ -82,7 +82,7 @@ public class Tracker {
      * @param itemDelete Item to delete
      */
     public void delete(Item itemDelete) {
-        this.items.remove(this.items.indexOf(itemDelete));
+        this.items.remove(itemDelete);
     }
     /**
      * The Method return all items.
@@ -160,8 +160,7 @@ public class Tracker {
         final Calendar cal = Calendar.getInstance();
         cal.setTimeZone(TimeZone.getTimeZone("Russia/Moscow"));
         cal.setTimeInMillis(millis);
-        final String timeString = new SimpleDateFormat("dd.MM.yy HH:mm:ss").format(cal.getTime());
-        return timeString;
+        return new SimpleDateFormat("dd.MM.yy HH:mm:ss").format(cal.getTime());
     }
     /**
      * Convert string value date and time "31.12.1970 23:59:59" to millisecond value.

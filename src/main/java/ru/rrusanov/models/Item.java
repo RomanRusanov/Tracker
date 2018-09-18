@@ -11,27 +11,27 @@ import java.util.Random;
  */
 public class Item {
     /**
-     * @{value} id String item id generate random
+     * The field id String item id generate random.
      */
     private String id;
     /**
-     * @{value} name String name of item
+     * The field name String name of item.
      */
     private String name;
     /**
-     * @{value} description String description for item
+     * The field description String description for item.
      */
     private String description;
     /**
-     * @{value} create long time of creation item
+     * The field create long time of creation item.
      */
     private long create;
     /**
-     * @{value} comment String comment for item
+     * The field comment String comment for item.
      */
     private String comment;
     /**
-     * @{value} Random constant generate random sequence for item id
+     * The field Random constant generate random sequence for item id.
      */
     private static final Random RN = new Random();
     /**
@@ -68,13 +68,6 @@ public class Item {
      */
     public String getComment() {
         return this.comment;
-    }
-    /**
-     * Setter for id field.
-     * @param id - String id item
-     **/
-    public void setId(String id) {
-        this.id = id;
     }
     /**
      * Setter for name field.
@@ -122,7 +115,7 @@ public class Item {
         this.create = System.currentTimeMillis();
     }
     /**
-     * Consructor for Item object.
+     * Constructor for Item object.
      * @param name name for item
      * @param description description for item
      * @param create date and time creation item in tracker
