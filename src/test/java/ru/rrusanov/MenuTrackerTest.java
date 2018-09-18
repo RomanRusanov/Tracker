@@ -1,5 +1,6 @@
 package ru.rrusanov;
 
+import org.junit.Assert;
 import ru.rrusanov.models.Item;
 
 import org.junit.Test;
@@ -169,5 +170,43 @@ public class MenuTrackerTest {
         final String expect = byteArrayOutputStream.toString();
         final String result = "Item ID:Wrong not found, please enter correct ID. " + END_LINE;
         assertThat(result, is(expect));
+    }
+    /**
+     * Test method addAction.
+     */
+    @Test
+    public void whenActionAddedThenItExistInTracker() {
+        /**
+         * Inner action class for test.
+         */
+        class NewAction extends BaseActions {
+            /**
+             * Default constructor.
+             * @param name name for action.
+             */
+            NewAction(String name) {
+                super(name);
+            }
+            /**
+             * Define what action should be made.
+             *
+             * @param input   Input from user
+             * @param tracker Main container.
+             */
+            @Override
+            public void execute(Input input, Tracker tracker) {
+                System.out.print("NewAction");
+            }
+        }
+        MenuTracker menuTracker = new MenuTracker(new Tracker(), new StubInput(new String[]{"y"}));
+        menuTracker.addActions(new NewAction("New Action"));
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        PrintStream old = System.out;
+        System.setOut(ps);
+        menuTracker.select(menuTracker.getActionsRange().size() - 1);
+        System.out.flush();
+        System.setOut(old);
+        Assert.assertEquals(baos.toString(), "NewAction");
     }
 }

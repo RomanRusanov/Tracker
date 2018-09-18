@@ -9,4 +9,3 @@ target
 *.war
 *.ear
 *.iml
-src/main/java/ru/rrusanov/templates/

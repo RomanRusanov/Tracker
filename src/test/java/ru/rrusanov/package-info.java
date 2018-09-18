@@ -29,5 +29,8 @@
  *  Item(String name, String description, long create, String comment) Consructor for Item object.
  *  String generateId() Generate random id for item.
  *
+ * Test for MenuTracker.java class.
+ *  void whenActionAddedThenItExistInTracker() Test method addAction.
+ *
  */
 package ru.rrusanov;

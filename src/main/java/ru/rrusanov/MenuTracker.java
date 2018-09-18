@@ -2,7 +2,6 @@ package ru.rrusanov;
 import ru.rrusanov.models.Item;
 
 import java.util.ArrayList;
-
 /**
  * Menu for user interaction.
  *
@@ -75,9 +74,7 @@ public class MenuTracker {
      * Show menu with actions list.
      */
     public void show() {
-        for (UserActions actions: this.actions) {
-                System.out.print(actions.info());
-        }
+        this.actions.forEach((nameAction) -> System.out.print(nameAction.info()));
     }
 
     /**
