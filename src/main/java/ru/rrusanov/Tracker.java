@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.function.Predicate;
 
 /**
  * Class store items, can added new items, find item by id.
@@ -40,8 +41,9 @@ public class Tracker {
      */
     public Item findById(String id) {
         Item result = null;
+        Predicate<Item> isMatchId = (x) -> x.getId().equals(id);
         for (Item item : items) {
-            if (item != null && item.getId().equals(id)) {
+            if (isMatchId.test(item)) {
                 result = item;
                 break;
             }
@@ -55,10 +57,10 @@ public class Tracker {
      * @return ArrayList with mach items by name field.
      */
     public ArrayList<Item> findByName(String key) {
-
         ArrayList<Item> resultItemArray = new ArrayList<>();
+        Predicate<Item> isMatchName = (x) -> x.getName().equals(key);
         for (Item item : items) {
-            if (item != null && item.getName() != null && item.getName().equals(key)) {
+            if (item != null && item.getName() != null && isMatchName.test(item)) {
                 resultItemArray.add(item);
             }
         }
