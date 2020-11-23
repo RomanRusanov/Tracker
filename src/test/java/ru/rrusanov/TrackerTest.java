@@ -2,11 +2,20 @@ package ru.rrusanov;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.rrusanov.actions.DeleteAction;
+import ru.rrusanov.actions.FindByIdAction;
+import ru.rrusanov.actions.FindByName;
 import ru.rrusanov.models.Item;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 /***
  * Class test all Tracker methods.
  *
@@ -25,6 +34,7 @@ public class TrackerTest {
         Assert.assertNotNull(tracker.add(new Item()));
     }
     /**
+     * --------------
      * If the instance by this id exists in the array of the tracker to return it.
      */
     @Test
@@ -40,12 +50,71 @@ public class TrackerTest {
 
         Assert.assertNotNull(tracker.findById(expectId));
     }
+
+    /**
+     * Use mock for input.
+     * Test DeleteAction.
+     */
+    @Test
+    public void deleteActionWithMock() {
+        Input input = mock(Input.class);
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("123"));
+        DeleteAction deleteAction = new DeleteAction();
+        PrintStream defaultOut = System.out;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        PrintStream stubOut = new PrintStream(stream);
+        System.setOut(stubOut);
+        when(input.ask(any(String.class))).thenReturn("123");
+        deleteAction.execute(input, tracker);
+        System.setOut(defaultOut);
+        Assert.assertEquals("Item ID:123 success deleted.", new String(stream.toByteArray()));
+    }
+
+    /**
+     * Use mock for input.
+     * Test FindByNameAction.
+     */
+    @Test
+    public void findByNameActionWithMock() {
+        Input input = mock(Input.class);
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("First", "Description", 1L, "Comment"));
+        FindByName findByName = new FindByName();
+        PrintStream defaultOut = System.out;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        PrintStream stubOut = new PrintStream(stream);
+        System.setOut(stubOut);
+        when(input.ask(any(String.class))).thenReturn("First");
+        findByName.execute(input, tracker);
+        System.setOut(defaultOut);
+        Assert.assertEquals("First", new String(stream.toByteArray()));
+    }
+
+    /**
+     * Use mock for input.
+     * Test FindByIdAction.
+     */
+    @Test
+    public void findByIdActionWithMock() {
+        Input input = mock(Input.class);
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("123"));
+        FindByIdAction findByIdAction = new FindByIdAction();
+        PrintStream defaultOut = System.out;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        PrintStream stubOut = new PrintStream(stream);
+        System.setOut(stubOut);
+        when(input.ask(any(String.class))).thenReturn("123");
+        findByIdAction.execute(input, tracker);
+        System.setOut(defaultOut);
+        Assert.assertEquals("123", new String(stream.toByteArray()));
+    }
     /**
      * If an update of a pattern instance he changed the link.
      */
     @Test
     public void thenItemUpdateWhenInItemNewLink() {
-
         Tracker tracker = new Tracker();
         Item beforeUpdate;
         Item afterUpdate;
@@ -104,6 +173,7 @@ public class TrackerTest {
         }
     }
     /**
+     * --------------------
      * Verifies that the returned array contains only the items whose name passed to the method.
      */
     @Test
