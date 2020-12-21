@@ -16,7 +16,7 @@ public class ConnectionRollback {
      * Create connection with autocommit=false mode and rollback call, when connection is closed.
      * @param connection to db.
      * @return modified connection.
-     * @throws java.sql.SQLException possible exception.
+     * @throws SQLException possible exception.
      */
     public static Connection create(Connection connection) throws SQLException {
         connection.setAutoCommit(false);

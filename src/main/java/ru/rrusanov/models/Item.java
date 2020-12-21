@@ -1,5 +1,6 @@
 package ru.rrusanov.models;
 
+import java.util.Objects;
 import java.util.Random;
 /**
  * Class The class includes information.
@@ -134,6 +135,36 @@ public class Item {
      */
     private String generateId() {
         return String.valueOf(RN.nextInt() + System.currentTimeMillis());
+    }
+
+    /**
+     * Override equals.
+     * @param o Object
+     * @return boolean.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Item item = (Item) o;
+        return create == item.create
+                && id.equals(item.id)
+                && Objects.equals(name, item.name)
+                && Objects.equals(description, item.description)
+                && Objects.equals(comment, item.comment);
+    }
+
+    /**
+     * Override hashCode.
+     * @return int hash.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, create, comment);
     }
 }
 

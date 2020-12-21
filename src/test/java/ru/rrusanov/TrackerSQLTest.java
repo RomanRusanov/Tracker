@@ -2,18 +2,15 @@ package ru.rrusanov;
 
 import org.junit.Test;
 import ru.rrusanov.models.Item;
-
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-
 /**
  * Class test Tracker.java.
  *
@@ -50,7 +47,7 @@ public class TrackerSQLTest {
     }
     /**
      * Test if item create then it exist. add() Method behavior check.
-     * @throws java.sql.SQLException ConnectionRollback may throw.
+     * @throws SQLException ConnectionRollback may throw.
      */
     @Test
     public void whenItemCreateThenItExist() throws SQLException {
@@ -87,7 +84,7 @@ public class TrackerSQLTest {
     }
     /**
      * Test if item with specific item_id exist in db when return true. findById() Method behavior check.
-     * @throws java.sql.SQLException ConnectionRollback may throw.
+     * @throws SQLException ConnectionRollback may throw.
      */
     @Test
     public void whenItemWithIdExistThenReturnTrue() throws SQLException {
@@ -103,7 +100,7 @@ public class TrackerSQLTest {
     }
     /**
      * Test if passed item_id and item, when item whit what id in bd update data from passed item.
-     * @throws java.sql.SQLException ConnectionRollback may throw.
+     * @throws SQLException ConnectionRollback may throw.
      */
     @Test
     public void whenPassedIdAndItemThenThatItemIdUpdatedInBD() throws SQLException {

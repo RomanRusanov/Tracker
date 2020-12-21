@@ -2,7 +2,6 @@ package ru.rrusanov.actions;
 
 import ru.rrusanov.ITracker;
 import ru.rrusanov.Input;
-import ru.rrusanov.Tracker;
 import ru.rrusanov.UserActions;
 import ru.rrusanov.models.Item;
 
