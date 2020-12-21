@@ -1,7 +1,7 @@
 package ru.rrusanov.actions;
 
+import ru.rrusanov.ITracker;
 import ru.rrusanov.Input;
-import ru.rrusanov.Tracker;
 import ru.rrusanov.UserActions;
 import ru.rrusanov.models.Item;
 
@@ -23,7 +23,7 @@ public class FindByName implements UserActions {
      * @param tracker Main container.
      */
     @Override
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         String name = input.ask("Enter name item to find:");
         ArrayList<Item> items = tracker.findByName(name);
         if (items.size() > 0) {

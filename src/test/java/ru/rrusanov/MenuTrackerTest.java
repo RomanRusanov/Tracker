@@ -194,7 +194,7 @@ public class MenuTrackerTest {
              * @param tracker Main container.
              */
             @Override
-            public void execute(Input input, Tracker tracker) {
+            public void execute(Input input, ITracker tracker) {
                 System.out.print("NewAction");
             }
         }

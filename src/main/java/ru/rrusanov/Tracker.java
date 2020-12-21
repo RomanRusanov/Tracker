@@ -19,7 +19,7 @@ import java.util.function.Predicate;
  * @version 0.1
  * @since 10.01.17
  */
-public class Tracker {
+public class Tracker implements ITracker{
     /**
      * ArrayList - items store all instance in tracker.
      */

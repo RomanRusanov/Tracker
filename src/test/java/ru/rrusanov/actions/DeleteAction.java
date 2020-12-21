@@ -1,5 +1,6 @@
 package ru.rrusanov.actions;
 
+import ru.rrusanov.ITracker;
 import ru.rrusanov.Input;
 import ru.rrusanov.Tracker;
 import ru.rrusanov.UserActions;
@@ -21,7 +22,7 @@ public class DeleteAction implements UserActions {
      * @param tracker Main container.
      */
     @Override
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         String itemDeleteID = input.ask("Enter ID item to delete:");
         Item deleteItem = tracker.findById(itemDeleteID);
         if (deleteItem != null) {

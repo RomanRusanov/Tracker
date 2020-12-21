@@ -14,7 +14,7 @@ public interface UserActions {
      * @param input Input from user
      * @param tracker Main container.
      */
-    void execute(Input input, Tracker tracker);
+    void execute(Input input, ITracker tracker);
 
     /**
      * Print to console comment for this action.

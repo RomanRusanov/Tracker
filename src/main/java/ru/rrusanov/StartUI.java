@@ -1,10 +1,11 @@
 package ru.rrusanov;
+
 /**
  * Class Run UI with Menu.
  *
  * @author Roman Rusanov
  * @version 0.1
- * @since 09.02.17
+ * @since 26.02.19
  */
 public class StartUI {
     /**
@@ -14,13 +15,13 @@ public class StartUI {
     /**
      * Tracker instance contain all items.
      */
-    private Tracker tracker;
+    private ITracker tracker;
     /**
      * Constructor encapsulate tracker and input.
      * @param input Input interface get data.
-     * @param tracker Tracker inatance contain items.
+     * @param tracker Tracker instance contain items.
      */
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input, ITracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -41,7 +42,10 @@ public class StartUI {
      */
     public static void main(String[] args) {
         Input input = new ValidateInput();
-        new StartUI(input, new Tracker()).init();
-
+        try (TrackerSQL trackerSQL = new TrackerSQL()) {
+            new StartUI(input, trackerSQL).init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

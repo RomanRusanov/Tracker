@@ -1,8 +1,8 @@
 package ru.rrusanov.actions;
 
 
+import ru.rrusanov.ITracker;
 import ru.rrusanov.Input;
-import ru.rrusanov.Tracker;
 import ru.rrusanov.UserActions;
 import ru.rrusanov.models.Item;
 
@@ -22,7 +22,7 @@ public class FindByIdAction implements UserActions {
      * @param tracker Main container.
      */
     @Override
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         String id = input.ask("Enter ID item to find:");
         Item item = tracker.findById(id);
         if (item != null) {
