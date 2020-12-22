@@ -6,6 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -33,6 +34,18 @@ public class HibernateRun {
             for (Item it : list) {
                 System.out.println(it);
             }
+            Item item1 = create(new Item("Configure schema"), sf);
+            item1.setDescription("This is description added after row insert in persistence storage");
+            item1.setCreated(new Timestamp(1459510232000L));
+            update(item1, sf);
+            Item item2 = new Item("Item2");
+            item2.setDescription("Desc Item2");
+            item2.setCreated(new Timestamp(2559510232000L));
+            create(item2, sf);
+            Item item3 = new Item("Item3");
+            item3.setDescription("Desc Item3");
+            item3.setCreated(new Timestamp(4559510232000L));
+            create(item3, sf);
         }  catch (Exception e) {
             e.printStackTrace();
         } finally {

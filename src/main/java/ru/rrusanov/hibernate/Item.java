@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -23,6 +24,14 @@ public class Item {
      * The name field.
      */
     private String name;
+    /**
+     * The description field.
+     */
+    private String description;
+    /**
+     * The created field.
+     */
+    private Timestamp created;
 
     /**
      * Default constructor.
@@ -68,6 +77,38 @@ public class Item {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * The getter.
+     * @return String.
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * The setter.
+     * @param description String.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * The getter.
+     * @return Timestamp.
+     */
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    /**
+     * The setter.
+     * @param created Timestamp.
+     */
+    public void setCreated(Timestamp created) {
+        this.created = created;
     }
 
     /**
