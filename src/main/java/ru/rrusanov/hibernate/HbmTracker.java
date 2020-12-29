@@ -5,8 +5,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 /**
  * @author Roman Rusanov
@@ -35,12 +33,12 @@ public class HbmTracker implements Store, AutoCloseable {
      */
     @Override
     public Item add(Item item) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-        session.close();
-        return item;
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            session.save(item);
+            session.getTransaction().commit();
+            return item;
+        }
     }
 
     /**
@@ -58,15 +56,15 @@ public class HbmTracker implements Store, AutoCloseable {
         itemToUpdate.setName(item.getName());
         itemToUpdate.setDescription(item.getDescription());
         itemToUpdate.setCreated(item.getCreated());
-        Session session = sf.openSession();
-        session.beginTransaction();
-        session.update(itemToUpdate);
-        session.getTransaction().commit();
-        session.close();
-        Item itemReplaced = findById(id);
-        return itemReplaced.getName().equals(item.getName())
-                && itemReplaced.getDescription().equals(item.getDescription())
-                && itemReplaced.getCreated().equals(item.getCreated());
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            session.update(itemToUpdate);
+            session.getTransaction().commit();
+            Item itemReplaced = findById(id);
+            return itemReplaced.getName().equals(item.getName())
+                    && itemReplaced.getDescription().equals(item.getDescription())
+                    && itemReplaced.getCreated().equals(item.getCreated());
+        }
     }
 
     /**
@@ -80,18 +78,19 @@ public class HbmTracker implements Store, AutoCloseable {
     public boolean delete(String id) {
         boolean result = false;
         Integer itemId = Integer.parseInt(id);
-        Session session = sf.openSession();
-        session.beginTransaction();
-        Item item = new Item(null);
-        item.setId(itemId);
-        session.delete(item);
-        session.getTransaction().commit();
-        session.close();
-        Item itemExist = findById(id);
-        if (itemExist == null) {
-            result = true;
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            Item item = new Item(null);
+            item.setId(itemId);
+            session.delete(item);
+            session.getTransaction().commit();
+            session.close();
+            Item itemExist = findById(id);
+            if (itemExist == null) {
+                result = true;
+            }
+            return result;
         }
-        return result;
     }
 
     /**
@@ -100,12 +99,12 @@ public class HbmTracker implements Store, AutoCloseable {
      */
     @Override
     public List<Item> findAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List result = session.createQuery("from ru.rrusanov.hibernate.Item").list();
-        session.getTransaction().commit();
-        session.close();
-        return result;
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            List result = session.createQuery("from ru.rrusanov.hibernate.Item").list();
+            session.getTransaction().commit();
+            return result;
+        }
     }
 
     /**
@@ -116,16 +115,14 @@ public class HbmTracker implements Store, AutoCloseable {
      */
     @Override
     public List<Item> findByName(String name) {
-        List all = findAll();
-        List<Item> result = new ArrayList<>();
-        Iterator<Item> it = all.iterator();
-        while (it.hasNext()) {
-            Item current = it.next();
-            if (current.getName().equals(name)) {
-                result.add(current);
-            }
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            List result = session.createQuery("from ru.rrusanov.hibernate.Item as i where i.name = :n")
+                    .setParameter("n", name)
+                    .getResultList();
+            session.getTransaction().commit();
+            return result;
         }
-        return result;
     }
 
     /**
@@ -136,12 +133,12 @@ public class HbmTracker implements Store, AutoCloseable {
      */
     @Override
     public Item findById(String id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        Item result = session.get(Item.class, Integer.parseInt(id));
-        session.getTransaction().commit();
-        session.close();
-        return result;
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            Item result = session.get(Item.class, Integer.parseInt(id));
+            session.getTransaction().commit();
+            return result;
+        }
     }
 
     @Override
