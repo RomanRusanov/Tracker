@@ -17,6 +17,12 @@
         <version>5.4.15.Final</version>
     </dependency>
     <dependency>
+        <groupId>org.hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>2.5.1</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>42.2.12</version>
@@ -131,6 +137,8 @@
         <version>3.3</version>
         <configuration>
             <compilerVersion>1.8</compilerVersion>
+            <source>9</source>
+            <target>9</target>
         </configuration>
     </plugin>
     <plugin>

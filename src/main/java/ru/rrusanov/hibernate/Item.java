@@ -48,6 +48,21 @@ public class Item {
     }
 
     /**
+     * The method create instance of item.
+     * @param name name.
+     * @param description description.
+     * @param created created
+     * @return item.
+     */
+    public static Item of(String name, String description, Timestamp created) {
+        Item item = new Item();
+        item.name = name;
+        item.description = description;
+        item.created = created;
+        return item;
+    }
+
+    /**
      * The getter.
      * @return Integer.
      */
