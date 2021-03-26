@@ -3,6 +3,8 @@ package ru.rrusanov;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rrusanov.models.Item;
+import ru.rrusanov.reactive.Observable;
+import ru.rrusanov.reactive.Observer;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -27,7 +29,7 @@ import java.util.TimeZone;
  * @version 0.1
  * @since 26.02.19
  */
-public class TrackerSQL implements ITracker, AutoCloseable {
+public class TrackerSQL implements ITracker, AutoCloseable, Observable {
     /**
      * The field contain instance connection to database.
      */
@@ -36,6 +38,10 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * The filed contain instance logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(TrackerSQL.class.getName());
+    /**
+     * Observable state object.
+     */
+    private Item state;
     /**
      * The default constructor. Initiate connection to the database.
      */
@@ -220,6 +226,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
                     Item currItem = itemIterator.next();
                     if (rs.getString("item_id").equals(currItem.getId())) {
                         currItem.setComment(rs.getString("comments"));
+                        this.setState(currItem);
                     }
                 }
             }
@@ -351,4 +358,37 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      */
     @Override
     public void update(Item itemUpdate) { }
+    /**
+     * Add subscriber.
+     * @param observer object that implement Observer interface.
+     * @return observer.
+     */
+    @Override
+    public Observer addObserver(Observer observer) {
+        this.OBSERVERS.add(observer);
+        return observer;
+    }
+    /**
+     * Remove subscriber.
+     * @param observer object that implement Observer interface.
+     */
+    @Override
+    public void removeObserver(Observer observer) {
+        this.OBSERVERS.remove(observer);
+    }
+    /**
+     * The method call every time when state change.
+     */
+    @Override
+    public void notifyObservers() {
+        this.OBSERVERS.forEach(observer -> observer.update(this.state));
+    }
+    /**
+     * Set state what subscribers want to receive.
+     * @param item State object.
+     */
+    private void setState(Item item) {
+        this.state = item;
+        this.notifyObservers();
+    }
 }

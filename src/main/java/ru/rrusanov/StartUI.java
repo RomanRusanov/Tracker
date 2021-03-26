@@ -1,5 +1,7 @@
 package ru.rrusanov;
 
+import ru.rrusanov.reactive.Subscriber;
+
 /**
  * Class Run UI with Menu.
  *
@@ -43,6 +45,7 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ValidateInput();
         try (TrackerSQL trackerSQL = new TrackerSQL()) {
+            trackerSQL.addObserver(new Subscriber());
             new StartUI(input, trackerSQL).init();
         } catch (Exception e) {
             e.printStackTrace();

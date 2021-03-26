@@ -166,5 +166,20 @@ public class Item {
     public int hashCode() {
         return Objects.hash(id, name, description, create, comment);
     }
+
+    /**
+     * Override to string.
+     * @return string.
+     */
+    @Override
+    public String toString() {
+        return "Item{"
+                + "id='" + id + '\''
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + ", create=" + create
+                + ", comment='" + comment + '\''
+                + '}';
+    }
 }
 

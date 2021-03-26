@@ -24,6 +24,6 @@ env:
 notifications:
   email:
     recipients:
-      -mailto:rusanov_roman@icloud.com
+      - mailto:rusanov_roman@icloud.com
     on_success: never # default: change
     on_failure: always # default: always
